@@ -115,7 +115,7 @@ const ProductScreen = ({ history, match }) => {
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
                         >
-                          {[...Array(product.countInStock).keys()].map((x) => (
+                          {[...Array(product.countInStock).keys()]?.map((x) => (
                             <option keys={x + 1} value={x + 1}>
                               {x + 1}
                             </option>
@@ -146,7 +146,7 @@ const ProductScreen = ({ history, match }) => {
               <ListGroup variant="flush">
                 <Row>
                   <Col>
-                    {product.reviews.map((review) => (
+                    {product.reviews?.map((review) => (
                       <ListGroup.Item key={review._id}>
                         <strong>{review.name}</strong>
                         <p>{review.createdAt.substring(0, 10)}</p>
@@ -154,7 +154,7 @@ const ProductScreen = ({ history, match }) => {
                     ))}
                   </Col>
                   <Col>
-                    {product.reviews.map((review) => (
+                    {product.reviews?.map((review) => (
                       <ListGroup.Item key={review._id}>
                         <Rating value={review.rating} />
                         <p>{review.comment}</p>
