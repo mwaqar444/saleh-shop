@@ -10,7 +10,7 @@
     "server": "nodemon backend/server",
     "client": "set NODE_OPTIONS=--openssl-legacy-provider && npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "data:import": "node backend/seeder",
+    "data:import": "node backend/Seeder",
     "data:destroy": "node backend/seeder -d",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
