@@ -52,16 +52,15 @@ app.use(errorHandler)
 
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000', // or your deployed frontend URL
-  credentials: true,
-console.log(
-    `client url is ${process.env.CLIENT_URL} mode on port ${PORT}`
-  )
+  credentials: true
 }));
 const PORT = process.env.PORT || 5000
 
 app.listen(
   PORT,
   console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}
+      client url is ${process.env.CLIENT_URL} mode on port ${PORT}
+    `
   )
 )
