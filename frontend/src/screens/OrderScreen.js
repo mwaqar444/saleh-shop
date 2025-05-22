@@ -16,6 +16,7 @@ import {
   ORDER_DELIVER_RESET,
 } from "../constants/orderConstants";
 import "../components/css/Nav.css";
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id;
@@ -53,7 +54,7 @@ const OrderScreen = ({ match, history }) => {
     }
 
     const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get("/api/config/paypal");
+      const { data: clientId } = await axios.get(`${baseURL}/api/config/paypal`);
       console.log(clientId);
       const script = document.createElement("script");
       script.type = "text/javascript";

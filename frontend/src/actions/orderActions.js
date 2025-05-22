@@ -21,8 +21,10 @@ import {
   ORDER_DELIVER_REQUEST,
 } from '../constants/orderConstants'
 import { logout } from './userActions'
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 export const createOrder = (order) => async (dispatch, getState) => {
+  
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,
@@ -39,7 +41,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.post(`/api/orders`, order, config)
+    const { data } = await axios.post(`${baseURL}/api/orders`, order, config)
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,
@@ -81,7 +83,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/orders/${id}`, config)
+    const { data } = await axios.get(`${baseURL}/api/orders/${id}`, config)
 
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
@@ -123,7 +125,7 @@ export const payOrder = (orderId, paymentResult) => async (
     }
 
     const { data } = await axios.put(
-      `/api/orders/${orderId}/pay`,
+      `${baseURL}/api/orders/${orderId}/pay`,
       paymentResult,
       config
     )
@@ -164,7 +166,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.put(
-      `/api/orders/${order._id}/deliver`,
+      `${baseURL}/api/orders/${order._id}/deliver`,
       {},
       config
     )
@@ -204,7 +206,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/orders/myorders`, config)
+    const { data } = await axios.get(`${baseURL}/api/orders/myorders`, config)
 
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
@@ -241,7 +243,7 @@ export const listOrders = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/orders`, config)
+    const { data } = await axios.get(`${baseURL}/api/orders`, config)
 
     dispatch({
       type: ORDER_LIST_SUCCESS,
