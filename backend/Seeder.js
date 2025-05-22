@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import users from './data/users.js'
+import users from './data/Users.js'
 import products from './data/products.js'
 import User from './Models/userModel.js'
 import Product from './Models/productModel.js'
