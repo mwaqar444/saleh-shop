@@ -1,10 +1,10 @@
 import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
-import colors from 'colors'
 import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
+import cors from 'cors';
 
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
@@ -50,6 +50,10 @@ if (process.env.NODE_ENV === 'production') {
 app.use(notFound)
 app.use(errorHandler)
 
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000', // or your deployed frontend URL
+  credentials: true
+}));
 const PORT = process.env.PORT || 5000
 
 app.listen(
