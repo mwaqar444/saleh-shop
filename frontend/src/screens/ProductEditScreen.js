@@ -9,7 +9,7 @@ import FormContainer from '../components/FormContainer'
 import { listProductDetails, updateProduct } from '../actions/productActions'
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 import css from '../components/css/Nav.css'
-const baseURL = process.env.REACT_APP_API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL_FRONTEND;
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id
