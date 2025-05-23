@@ -24,6 +24,8 @@ const ProductEditScreen = ({ match, history }) => {
   const [uploading, setUploading] = useState(false)
 
   const dispatch = useDispatch()
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
@@ -55,27 +57,28 @@ const ProductEditScreen = ({ match, history }) => {
   }, [dispatch, history, productId, product, successUpdate])
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('image', file)
-    setUploading(true)
+  const file = e.target.files[0];
+  const formData = new FormData();
+  formData.append('image', file);
+  setUploading(true);
 
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${userInfo.token}`, // Include the token
+      },
+    };
 
-      const { data } = await axios.post(`${baseURL}/api/upload`, formData, config)
+    const { data } = await axios.post(`${baseURL}/api/upload`, formData, config);
 
-      setImage(data)
-      setUploading(false)
-    } catch (error) {
-      console.error(error)
-      setUploading(false)
-    }
+    setImage(data.url); // Use the Cloudinary URL
+    setUploading(false);
+  } catch (error) {
+    console.error('Error:', error);
+    setUploading(false);
   }
+};
 
   const submitHandler = (e) => {
     console.log("check: ", e)

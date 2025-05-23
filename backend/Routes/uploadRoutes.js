@@ -1,41 +1,29 @@
-import path from 'path'
-import express from 'express'
-import multer from 'multer'
-const router = express.Router()
+import express from 'express';
+import multer from 'multer';
+import { protect, admin } from '../MiddleWare/authMiddleWare.js';
+import cloudinary from '../Config/cloudinary.js';
 
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename(req, file, cb) {
-    cb(
-      null,
-      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
-    )
-  },
-})
+const router = express.Router();
 
-function checkFileType(file, cb) {
-  const filetypes = /jpg|jpeg|png/
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
-  const mimetype = filetypes.test(file.mimetype)
+// Multer setup to handle file uploads
+const storage = multer.diskStorage({});
+const upload = multer({ storage });
 
-  if (extname && mimetype) {
-    return cb(null, true)
-  } else {
-    cb('Images only!')
+router.post('/', protect, admin, upload.single('image'), async (req, res) => {
+  try {
+    console.log('File received:', req.file); // Debugging
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'onlineShop',
+    });
+
+    res.json({
+      url: result.secure_url,
+      public_id: result.public_id,
+    });
+  } catch (error) {
+    console.error('Cloudinary Upload Error:', error); // Log the error
+    res.status(500).json({ message: 'Image upload failed' });
   }
-}
+});
 
-const upload = multer({
-  storage,
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb)
-  },
-})
-
-router.post('/', upload.single('image'), (req, res) => {
-  res.send(`/${req.file.path}`)
-})
-
-export default router
+export default router;

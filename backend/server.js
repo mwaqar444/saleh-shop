@@ -12,7 +12,6 @@ import orderRoutes from './Routes/orderRoutes.js'
 import uploadRoutes from './Routes/uploadRoutes.js'
 
 dotenv.config()
-
 connectDB()
 
 const app = express()
