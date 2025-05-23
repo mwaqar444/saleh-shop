@@ -71,7 +71,8 @@ const ProductEditScreen = ({ match, history }) => {
     };
 
     const { data } = await axios.post(`${baseURL}/api/upload`, formData, config);
-
+    console.log('Uploaded Image Data:', data); // Debugging
+    
     setImage(data.url); // Use the Cloudinary URL
     setUploading(false);
   } catch (error) {
